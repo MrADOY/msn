@@ -50,6 +50,11 @@ public class AuthentificationController {
 	@Autowired
 	JwtFournisseur jwtFournisseur;
 
+	@PostMapping("/hello")
+	public String hello() {
+		return "Hello World";
+	}
+	
 	@PostMapping("/connexion")
 	public ResponseEntity<?> authentifierUtilisateur(@Valid @RequestBody ConnexionRequest connexionRequest) {
 
@@ -65,7 +70,7 @@ public class AuthentificationController {
 	@PostMapping("/inscription")
 	public ResponseEntity<?> inscrireUser(@Valid @RequestBody InscriptionRequest inscriptionRequest) {
 		if (repertoireUtilisateur.existsByEmail(inscriptionRequest.getEmail())) {
-			return new ResponseEntity(new ApiResponse(false, "Username is already taken!"), HttpStatus.BAD_REQUEST);
+			return new ResponseEntity(new ApiResponse(false, "Adresse mail déjà utilisée"), HttpStatus.BAD_REQUEST);
 		}
 
 		// On créer le compte utilisateur
