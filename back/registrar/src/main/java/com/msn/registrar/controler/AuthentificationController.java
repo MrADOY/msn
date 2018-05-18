@@ -2,6 +2,7 @@ package com.msn.registrar.controler;
 
 
 import com.msn.registrar.exception.AppException;
+import com.msn.registrar.exception.BadRequestException;
 import com.msn.registrar.modeles.Role;
 import com.msn.registrar.modeles.TypeRole;
 import com.msn.registrar.modeles.Utilisateurs;
@@ -31,6 +32,8 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.util.Collections;
 
+import org.springframework.security.core.AuthenticationException;
+
 @RestController
 @RequestMapping("/api/auth")
 public class AuthentificationController {
@@ -57,9 +60,14 @@ public class AuthentificationController {
 	
 	@PostMapping("/connexion")
 	public ResponseEntity<?> authentifierUtilisateur(@Valid @RequestBody ConnexionRequest connexionRequest) {
-
-		Authentication authentication = authenticationManager.authenticate(
-				new UsernamePasswordAuthenticationToken(connexionRequest.getEmail(), connexionRequest.getPassword()));
+		Authentication authentication;
+		try {
+			authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+					connexionRequest.getEmail(), connexionRequest.getPassword()));
+		} catch (AuthenticationException e) {
+			throw new BadRequestException(
+					"NOOB THOMAS BUCHARD" + connexionRequest.getEmail() + connexionRequest.getPassword());
+		}
 
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 
@@ -69,8 +77,9 @@ public class AuthentificationController {
 
 	@PostMapping("/inscription")
 	public ResponseEntity<?> inscrireUser(@Valid @RequestBody InscriptionRequest inscriptionRequest) {
+		
 		if (repertoireUtilisateur.existsByEmail(inscriptionRequest.getEmail())) {
-			return new ResponseEntity(new ApiResponse(false, "Adresse mail déjà utilisée"), HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<ApiResponse>(new ApiResponse(false, "Adresse mail déjà utilisée"), HttpStatus.BAD_REQUEST);
 		}
 
 		// On créer le compte utilisateur
