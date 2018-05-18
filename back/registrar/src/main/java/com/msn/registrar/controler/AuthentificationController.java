@@ -3,6 +3,8 @@ package com.msn.registrar.controler;
 
 import com.msn.registrar.exception.AppException;
 import com.msn.registrar.exception.BadRequestException;
+import com.msn.registrar.message.Message;
+import com.msn.registrar.message.MessageType;
 import com.msn.registrar.modeles.Role;
 import com.msn.registrar.modeles.TypeRole;
 import com.msn.registrar.modeles.Utilisateurs;
@@ -72,6 +74,7 @@ public class AuthentificationController {
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 
 		String jwt = jwtFournisseur.genererToken(authentication);
+		Message.send(connexionRequest.getEmail()+":"+jwt, MessageType.LOGIN);
 		return ResponseEntity.ok(new JwtAuthenticationResponse(jwt));
 	}
 
