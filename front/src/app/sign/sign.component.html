@@ -1,0 +1,115 @@
+<div class="container">
+  <div class="login-wrap">
+    <div class="login-html">
+      <div class="alert alert-danger" [hidden]="!(submitted && created==-1)"><h1>Erreur lors de la création du compte !</h1>
+        <i>Cette adresse mail existe déjà !</i></div>
+      <div class="login-form" [hidden]="(submitted && created!=-1)">
+        <h1 class="sign-up">Inscription</h1>
+
+        <form (ngSubmit)="onSubmit()" #signForm="ngForm" novalidate>
+          <!--<input id="tab-1" type="radio" name="tab" class="sign-up" checked><label for="tab-1" class="tab">Inscription</label>-->
+          <!--<input id="tab-2" type="radio" name="tab" class="sign-in"><label for="tab-2" class="tab">Sign In</label>-->
+          <div class="form-group">
+            <div class="col-sm-6">
+              <label for="nom" class="label">Nom</label>
+              <input type="text" class="form-control" id="nom" required minlength="4" maxlength="40"
+                     [(ngModel)]="model.nom" name="nom"
+                     #nom="ngModel" placeholder="Nom"
+              >
+              <div [hidden]="nom.valid || nom.pristine"
+                   class="alert alert-danger">
+                Le nom est requis et doit être composé de 4 à 40 caractères
+              </div>
+            </div>
+
+            <div class="col-sm-6">
+              <label for="prenom" class="label">Prénom</label>
+              <input type="text" class="input form-control" id="prenom" required minlength="4" maxlength="40"
+                     [(ngModel)]="model.prenom" name="prenom"
+                     #prenom="ngModel" placeholder="Prénom"
+              >
+              <div [hidden]="prenom.valid || prenom.pristine"
+                   class="alert alert-danger">
+                Le prénom est requis et doit être composé de 4 à 40 caractères
+              </div>
+            </div>
+
+
+            <div class="col-sm-12">
+              <label for="email" class="label">Email</label>
+              <input type="text" class="input form-control" id="email" required
+                     pattern="^[a-zA-Z0-9._+-]+@[a-z]+\.[a-z.]{2,5}$"
+                     [(ngModel)]="model.email" name="email" #email="ngModel" placeholder="email@exemple.com">
+              <div [hidden]="email.valid || (email.pristine && !signForm.submitted)"
+                   class="alert alert-danger">
+                L'email est invalide
+              </div>
+              <!--<pre *ngIf="email.errors">{{ email.errors | json }}</pre>-->
+
+            </div>
+
+            <div class="col-sm-6">
+              <label for="password" class="label">Mot de passe</label>
+              <input type="password" class="input form-control" id="password"
+                     required minlength="6" maxlength="20"
+                     [(ngModel)]="model.password" name="password" placeholder="Mot de passe"
+                     #password="ngModel" validateEqual="confirmPassword" reverse="true">
+              <div [hidden]="password.valid || password.pristine"
+                   class="alert alert-danger">
+                Le mot de passe doit contenir entre 6 et 20 caractères
+              </div>
+            </div>
+
+            <div class="col-sm-6">
+              <label for="confirmPassword" class="label">Confirmation</label>
+              <input type="password" class="input form-control" id="confirmPassword"
+                     required validateEqual="password" placeholder="Mot de passe"
+                     [(ngModel)]="model.confirmPassword" name="confirmPassword"
+                     #confirmPassword="ngModel">
+              <div [hidden]="confirmPassword.valid || (confirmPassword.pristine && !signForm.submitted)"
+                   class="alert alert-danger">
+                Les mots de passe ne correspondent pas
+              </div>
+            </div>
+
+          </div>
+
+          <!--<div class="row justify-content-md-center">-->
+
+          <div class="col-sm-12 submit ">
+            <button type="submit" class="btn btn-success" [disabled]="!signForm.form.valid">S'inscrire</button>
+            <button type="button" class="btn btn-info" (click)="newUser(); signForm.reset()">Reset</button>
+          </div>
+          <!--</div>-->
+
+        </form>
+
+      </div>
+    </div>
+  </div>
+  <div [hidden]="!(submitted && (created==1 || created==0))" class="panel"
+       [ngClass]="{'panel-success': created==1, 'panel-info': created==0}">
+    <div class="panel-heading">
+      <h1>Bienvenue {{model.prenom}} {{model.nom}} !</h1>
+      <div *ngIf="created==1;">Compte créé !</div>
+      <div *ngIf="created==0;">
+        <i>Votre compte est en cours de création</i>
+      </div>
+    </div>
+    <div [hidden]="!(submitted && created==1)" class="panel-body">
+      <h2>Voici le récapitualtif de vos informations</h2>
+      <div class="row">
+        <div class="col-xs-3">Nom</div>
+        <div class="col-xs-9  pull-left">{{ model.nom }}</div>
+      </div>
+      <div class="row">
+        <div class="col-xs-3">Prénom</div>
+        <div class="col-xs-9 pull-left">{{ model.prenom }}</div>
+      </div>
+      <div class="row">
+        <div class="col-xs-3">Email</div>
+        <div class="col-xs-9 pull-left">{{ model.email }}</div>
+      </div>
+    </div>
+  </div>
+</div>
