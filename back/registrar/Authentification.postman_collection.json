@@ -1,0 +1,136 @@
+{
+	"info": {
+		"_postman_id": "5cc316b0-a4a1-48ef-bb96-b04591482d9a",
+		"name": "Authentification",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "detail utilisateur",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\":\"pietrzak.aurelien@gmail.com\",\n\t\"password\":\"secret\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/auth/detail/pietrzak.aurelien@gmail.com",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"auth",
+						"detail",
+						"pietrzak.aurelien@gmail.com"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "connexion utilisateur",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\":\"pietrzak.aurelien@gmail.com\",\n\t\"password\":\"secret\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/auth/connexion",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"auth",
+						"connexion"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "inscription utilisateur",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nom\":\"Aurelien\",\n\t\"prenom\":\"Aurelien\",\n\t\"email\":\"pietrzak.aurelien@gmail.com\"\n\t\"password\":\"secret\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/auth/inscription",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"auth",
+						"inscription"
+					]
+				},
+				"description": "Paramètres à changer "
+			},
+			"response": []
+		},
+		{
+			"name": "status controle",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTI2NTQ5NjIzLCJleHAiOjE1MjcxNTQ0MjN9.x5GcjvS1FLKzsR9k8i3UcBNRJ08czHUuTmHuRs7FNpcs0eTWTF2l8EAHsrWIlMiF9P27USsT0fKPJ_siLtIahg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/auth/status",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"auth",
+						"status"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

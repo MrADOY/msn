@@ -3,6 +3,10 @@ package com.msn.registrar.message;
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 import com.rabbitmq.client.Channel;
@@ -11,17 +15,21 @@ import com.rabbitmq.client.ConnectionFactory;
 
 @Component
 public class Message {
-	private String addr = "localhost";
-	private int port = 5672;
+	
+
+	private String addr;
+	private int port;
 	private static String exchange_name = "LOGMSG";
 
 	private Connection connection;
 	private static Channel channel;
 
-	public Message() {
+	@Autowired
+	public Message(@Value("${rabbit.addr}") String addr,
+				   @Value("${rabbit.port}") int port) {
 		ConnectionFactory factory = new ConnectionFactory();
-		System.out.println(this.addr);
-		System.out.println(this.port);
+		this.addr = addr;
+		this.port = port;
 		factory.setHost(this.addr);
 		factory.setPort(this.port);
 		try {

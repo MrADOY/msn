@@ -1,6 +1,32 @@
 package com.msn.registrar.controler;
 
 
+import java.net.URI;
+import java.util.Collections;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
 import com.msn.registrar.exception.AppException;
 import com.msn.registrar.exception.BadRequestException;
 import com.msn.registrar.message.Message;
@@ -9,32 +35,13 @@ import com.msn.registrar.modeles.Role;
 import com.msn.registrar.modeles.TypeRole;
 import com.msn.registrar.modeles.Utilisateurs;
 import com.msn.registrar.payload.ApiResponse;
+import com.msn.registrar.payload.AuthenticationResponse;
 import com.msn.registrar.payload.ConnexionRequest;
 import com.msn.registrar.payload.InscriptionRequest;
-import com.msn.registrar.payload.JwtAuthenticationResponse;
 import com.msn.registrar.repertoire.RepertoireRole;
 import com.msn.registrar.repertoire.RepertoireUtilisateurs;
 import com.msn.registrar.securite.JwtFournisseur;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
-import javax.validation.Valid;
-import java.net.URI;
-import java.util.Collections;
-
-import org.springframework.security.core.AuthenticationException;
+import com.msn.registrar.securite.UtilisateurPrincipal;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -54,10 +61,11 @@ public class AuthentificationController {
 
 	@Autowired
 	JwtFournisseur jwtFournisseur;
-
-	@PostMapping("/hello")
-	public String hello() {
-		return "Hello World";
+	
+	/* Uniquement pour tester les appels API */
+	@GetMapping("/status")
+	public String reponseAPI() {
+		return "It's works";
 	}
 	
 	@PostMapping("/connexion")
@@ -68,15 +76,39 @@ public class AuthentificationController {
 					connexionRequest.getEmail(), connexionRequest.getPassword()));
 		} catch (AuthenticationException e) {
 			throw new BadRequestException(
-					"NOOB THOMAS BUCHARD" + connexionRequest.getEmail() + connexionRequest.getPassword());
+					"Erreur d'authentification" + connexionRequest.getEmail() + connexionRequest.getPassword());
 		}
 
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 
 		String jwt = jwtFournisseur.genererToken(authentication);
-		Message.send(connexionRequest.getEmail()+":"+jwt, MessageType.LOGIN);
-		return ResponseEntity.ok(new JwtAuthenticationResponse(jwt));
+		Message.send(connexionRequest.getEmail() + ":" + jwt, MessageType.LOGIN);
+
+		// Retourne le token et les details de l'utilisateur
+		UtilisateurPrincipal util = UtilisateurPrincipal.creer(repertoireUtilisateur
+				.findByEmail(connexionRequest.getEmail()).orElseThrow(() -> new UsernameNotFoundException(
+						"Utilsateur non trouvé avec cette email : " + connexionRequest.getEmail())));
+
+		return ResponseEntity.ok(new AuthenticationResponse(jwt, util));
 	}
+
+	@GetMapping("/deconnexion")
+	public ResponseEntity<?> getLogoutPage(HttpServletRequest request, HttpServletResponse response) {
+
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (authentication != null)
+			new SecurityContextLogoutHandler().logout(request, response, authentication);
+
+		return ResponseEntity.ok("Deconnexion");
+	}
+
+	@GetMapping("/detail/{email}")
+	public ResponseEntity<?> detail(@PathVariable("email") String email){
+		Utilisateurs utilisateur = repertoireUtilisateur.findByEmail(email).orElseThrow(
+				() -> new UsernameNotFoundException("Utilsateur non trouvé avec cette email : " + email));
+		return ResponseEntity.ok(UtilisateurPrincipal.creer(utilisateur));
+	}
+	
 
 	@PostMapping("/inscription")
 	public ResponseEntity<?> inscrireUser(@Valid @RequestBody InscriptionRequest inscriptionRequest) {
