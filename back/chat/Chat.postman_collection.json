@@ -13,7 +13,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTI3MzI1MTI5LCJleHAiOjE1MjczMjg3Mjl9.4txdUhBrh0hhxWsRf7rMxgxRgroDsEzLWtDQ59vmikxfze3TkpUwVWatJiotA_UeUfltqL6eQKtynFWCV9oiyQ",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI5IiwiaWF0IjoxNTI3MzM2MTQxLCJleHAiOjE1MjczMzk3NDF9.tlYSJjgRY8p2HlMG2LKfW-lgbt1BWUKC2Sh1CTW5QmJ4_Sb_afkBuGsQiGXrgLi2hdAZ9G0DVZHNo6REIYG5aw",
 							"type": "string"
 						}
 					]
@@ -27,7 +27,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"destinataire\" : \"pietrzak.aurelien@gmail.com\",\n\t\"emetteur\" : \"Pour l'instant on sait pas\",\n\t\"message\" : \"Ceci est un message ! Salut toi !\"\n}"
+					"raw": "{\n\t\"destinataire\" : \"pietrzak.aurelien@gmail.com\",\n\t\"emetteur\" : \"romain.lefevre@gmail.com\",\n\t\"message\" : \"Salut Aurelien ! je suis Romain\"\n}"
 				},
 				"url": {
 					"raw": "http://localhost:5001/api/chat/envoyer-message",

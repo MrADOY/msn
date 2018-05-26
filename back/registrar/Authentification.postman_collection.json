@@ -48,7 +48,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"email\":\"pietrzak.aurelien@gmail.com\",\n\t\"password\":\"secret\"\n}"
+					"raw": "{\n\t\"email\":\"lefevre.romain@gmail.com\",\n\t\"password\":\"aqzsaqzs\"\n}"
 				},
 				"url": {
 					"raw": "http://localhost:5000/api/auth/connexion",
@@ -78,7 +78,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"nom\":\"Aurelien\",\n\t\"prenom\":\"Aurelien\",\n\t\"email\":\"pietrzak.aurelien@gmail.com\"\n\t\"password\":\"secret\"\n}"
+					"raw": "{\n\t\"nom\":\"Aurelien\",\n\t\"prenom\":\"Aurelien\",\n\t\"email\": \"pietrzak.aurel@gmail.com\",\n\t\"password\":\"secret\"\n}"
 				},
 				"url": {
 					"raw": "http://localhost:5000/api/auth/inscription",

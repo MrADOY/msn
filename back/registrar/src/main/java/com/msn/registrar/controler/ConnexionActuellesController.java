@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.msn.registrar.message.Message;
+import com.msn.registrar.message.MessageType;
+import com.msn.registrar.modeles.Utilisateur;
 import com.msn.registrar.securite.UtilisateurPrincipal;
 
 @RestController
@@ -34,17 +37,29 @@ public class ConnexionActuellesController {
 	}
 
 	public static void addUser(UtilisateurPrincipal utilisateur) {
-		if(utilisateursConnectes == null) {
+		if (utilisateursConnectes == null) {
 			utilisateursConnectes = new HashSet<>();
 		}
-		utilisateursConnectes.add(utilisateur);
-	}
+		/* Envoie une notification à tous les utilisateurs connectés
+		 *  d'une personne vient de se connecter
+		 */
+		if (utilisateursConnectes.add(utilisateur)) {
+			utilisateursConnectes.forEach(u -> Message.send(utilisateur.getEmail() + ":" + "s'est connecté",
+					new MessageType(u.getEmail(), "service-registrar").ampqRoutingKey()));
+			}
+		}
 	
 	public static void removeUser(UtilisateurPrincipal utilisateur) {
-		if(utilisateursConnectes == null) {
+		if (utilisateursConnectes == null) {
 			utilisateursConnectes = new HashSet<>();
 		}
-		utilisateursConnectes.remove(utilisateur);
+		/* Envoie une notification à tous les utilisateurs connectés
+		 *  d'une personne vient de se déconnecter
+		 */
+		if (utilisateursConnectes.remove(utilisateur)) {
+			utilisateursConnectes.forEach(u -> Message.send(utilisateur.getEmail() + ":" + "s'est deconnecté",
+					new MessageType(u.getEmail(), "service-registrar").ampqRoutingKey()));
+		}
 	}
 }
 	
