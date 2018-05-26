@@ -35,7 +35,7 @@ import com.msn.registrar.message.Message;
 import com.msn.registrar.message.MessageType;
 import com.msn.registrar.modeles.Role;
 import com.msn.registrar.modeles.TypeRole;
-import com.msn.registrar.modeles.Utilisateurs;
+import com.msn.registrar.modeles.Utilisateur;
 import com.msn.registrar.payload.ApiResponse;
 import com.msn.registrar.payload.AuthenticationResponse;
 import com.msn.registrar.payload.ConnexionRequest;
@@ -78,6 +78,8 @@ public class AuthentificationController {
 			authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
 					connexionRequest.getEmail(), connexionRequest.getPassword()));
 		} catch (AuthenticationException e) {
+			Message.send(connexionRequest.getEmail() + ":" + "Connexion non établie",
+					new MessageType("log", connexionRequest.getEmail()).ampqRoutingKey());
 			throw new BadRequestException(
 					"Erreur d'authentification" + connexionRequest.getEmail() + connexionRequest.getPassword());
 		}
@@ -85,7 +87,8 @@ public class AuthentificationController {
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 
 		String jwt = jwtFournisseur.genererToken(authentication);
-		Message.send(connexionRequest.getEmail() + ":" + jwt, MessageType.LOGIN);
+		Message.send(connexionRequest.getEmail() + ":" + jwt + "Connexion établie",
+				new MessageType("log", connexionRequest.getEmail()).ampqRoutingKey());
 
 		// Retourne le token et les details de l'utilisateur
 		UtilisateurPrincipal util = UtilisateurPrincipal.creer(repertoireUtilisateur
@@ -111,7 +114,7 @@ public class AuthentificationController {
 
 	@GetMapping("/detail/{email}")
 	public ResponseEntity<?> detail(@PathVariable("email") String email){
-		Utilisateurs utilisateur = repertoireUtilisateur.findByEmail(email).orElseThrow(
+		Utilisateur utilisateur = repertoireUtilisateur.findByEmail(email).orElseThrow(
 				() -> new UsernameNotFoundException("Utilsateur non trouvé avec cette email : " + email));
 		return ResponseEntity.ok(UtilisateurPrincipal.creer(utilisateur));
 	}
@@ -126,7 +129,7 @@ public class AuthentificationController {
 
 		// On créer le compte utilisateur
 
-		Utilisateurs utilisateurs = new Utilisateurs(inscriptionRequest.getNom(), inscriptionRequest.getPrenom(),
+		Utilisateur utilisateurs = new Utilisateur(inscriptionRequest.getNom(), inscriptionRequest.getPrenom(),
 				inscriptionRequest.getEmail(), inscriptionRequest.getPassword());
 
 		utilisateurs.setPassword(passwordEncoder.encode(utilisateurs.getPassword()));
@@ -136,7 +139,7 @@ public class AuthentificationController {
 
 		utilisateurs.setRoles(Collections.singleton(userRole));
 
-		Utilisateurs result = repertoireUtilisateur.save(utilisateurs);
+		Utilisateur result = repertoireUtilisateur.save(utilisateurs);
 
 		URI location = ServletUriComponentsBuilder.fromCurrentContextPath().path("/users/{username}")
 				.buildAndExpand(result.getEmail()).toUri();

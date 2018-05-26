@@ -1,9 +1,11 @@
-package com.msn.registrar.repertoire;
+package com.msn.chat.repertoire;
 
-import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 import java.util.Optional;
-import com.msn.registrar.modeles.Utilisateur;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.msn.chat.modeles.Utilisateur;
 
 /**
  * MicroService de gestion des logins 

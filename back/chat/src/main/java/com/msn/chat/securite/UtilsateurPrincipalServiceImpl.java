@@ -1,4 +1,4 @@
-package com.msn.registrar.securite;
+package com.msn.chat.securite;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,14 +8,15 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.msn.registrar.modeles.Utilisateur;
-import com.msn.registrar.repertoire.RepertoireUtilisateurs;
+import com.msn.chat.modeles.Utilisateur;
+import com.msn.chat.repertoire.RepertoireUtilisateurs;
+
 
 @Service
 public class UtilsateurPrincipalServiceImpl implements UserDetailsService  {
 
 	@Autowired
-    RepertoireUtilisateurs repertoireUtilisateur;
+	RepertoireUtilisateurs repertoireUtilisateur;
 	
 	@Override
 	@Transactional

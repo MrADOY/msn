@@ -1,4 +1,4 @@
-package com.msn.registrar.message;
+package com.msn.chat.message;
 
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;

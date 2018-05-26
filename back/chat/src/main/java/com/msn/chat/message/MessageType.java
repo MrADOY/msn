@@ -1,4 +1,4 @@
-package com.msn.registrar.message;
+package com.msn.chat.message;
 
 public class MessageType {
 

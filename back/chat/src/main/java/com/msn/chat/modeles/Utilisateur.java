@@ -1,4 +1,4 @@
-package com.msn.registrar.modeles;
+package com.msn.chat.modeles;
 
 import org.hibernate.annotations.NaturalId;
 import javax.persistence.*;
@@ -28,7 +28,7 @@ import java.util.Set;
         })
 })
 
-public class Utilisateurs {
+public class Utilisateur {
 
 	/**
 	 * JPA Génére automatiquement les ID selon la politique choisie
@@ -63,11 +63,11 @@ public class Utilisateurs {
     
 	private Set<Role> roles = new HashSet<>();
 
-	public Utilisateurs() {
+	public Utilisateur() {
 		//
 	}
 
-	public Utilisateurs(String nom, String prenom, String email, String password) {
+	public Utilisateur(String nom, String prenom, String email, String password) {
 		this.nom = nom;
 		this.prenom = prenom;
 		this.email = email;

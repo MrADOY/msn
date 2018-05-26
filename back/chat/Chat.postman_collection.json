@@ -1,0 +1,49 @@
+{
+	"info": {
+		"_postman_id": "8f964021-73e6-43ff-8b6b-67a61b2814c2",
+		"name": "Chat",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "envoyer message",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTI3MzI1MTI5LCJleHAiOjE1MjczMjg3Mjl9.4txdUhBrh0hhxWsRf7rMxgxRgroDsEzLWtDQ59vmikxfze3TkpUwVWatJiotA_UeUfltqL6eQKtynFWCV9oiyQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"destinataire\" : \"pietrzak.aurelien@gmail.com\",\n\t\"emetteur\" : \"Pour l'instant on sait pas\",\n\t\"message\" : \"Ceci est un message ! Salut toi !\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:5001/api/chat/envoyer-message",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"chat",
+						"envoyer-message"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
