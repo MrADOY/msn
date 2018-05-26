@@ -3,6 +3,7 @@ package com.msn.registrar.controler;
 
 import java.net.URI;
 import java.util.Collections;
+import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -37,6 +39,7 @@ import com.msn.registrar.modeles.Utilisateurs;
 import com.msn.registrar.payload.ApiResponse;
 import com.msn.registrar.payload.AuthenticationResponse;
 import com.msn.registrar.payload.ConnexionRequest;
+import com.msn.registrar.payload.DeconnexionRequest;
 import com.msn.registrar.payload.InscriptionRequest;
 import com.msn.registrar.repertoire.RepertoireRole;
 import com.msn.registrar.repertoire.RepertoireUtilisateurs;
@@ -89,17 +92,21 @@ public class AuthentificationController {
 				.findByEmail(connexionRequest.getEmail()).orElseThrow(() -> new UsernameNotFoundException(
 						"Utilsateur non trouvé avec cette email : " + connexionRequest.getEmail())));
 
+		ConnexionActuellesController.addUser(util);
 		return ResponseEntity.ok(new AuthenticationResponse(jwt, util));
 	}
 
-	@GetMapping("/deconnexion")
-	public ResponseEntity<?> getLogoutPage(HttpServletRequest request, HttpServletResponse response) {
+	@RequestMapping(path ="/deconnexion", method = RequestMethod.DELETE)
+	
+	public ResponseEntity<?> deconnexion(@Valid @RequestBody DeconnexionRequest deconnexionRequest) {
 
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		if (authentication != null)
-			new SecurityContextLogoutHandler().logout(request, response, authentication);
+		UtilisateurPrincipal util = UtilisateurPrincipal.creer(repertoireUtilisateur
+				.findByEmail(deconnexionRequest.getEmail()).orElseThrow(() -> new UsernameNotFoundException(
+						"Utilsateur non trouvé avec cette email : " + deconnexionRequest.getEmail())));
 
-		return ResponseEntity.ok("Deconnexion");
+		ConnexionActuellesController.removeUser(util);
+		
+		return ResponseEntity.ok("Deconnexion" + new Date().toString());
 	}
 
 	@GetMapping("/detail/{email}")
