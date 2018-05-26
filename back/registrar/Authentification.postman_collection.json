@@ -131,6 +131,81 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "deconnexion",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\":\"pietrzak.aurelien@gmail.com\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/auth/deconnexion",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"auth",
+						"deconnexion"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "lister utilisateurs connectes",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:5000/api/connexions/utilisateurs-co",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"connexions",
+						"utilisateurs-co"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "utilisateur connecte",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:5000/api/connexions/connecte/pietrzak.aurelien@gmail.com",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"connexions",
+						"connecte",
+						"pietrzak.aurelien@gmail.com"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
