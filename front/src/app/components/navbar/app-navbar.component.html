@@ -1,0 +1,30 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
+  <a class="navbar-brand" href="#">MSN</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+          aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item" routerLinkActive="active"><a class="nav-link" routerLink="login" [hidden]="logged">Connexion</a></li>
+      <li class="nav-item" routerLinkActive="active"><a class="nav-link" routerLink="sign" [hidden]="logged">Inscription</a></li>
+      <li class="nav-item" routerLinkActive="active"><a class="nav-link" routerLink="login" [hidden]="!logged">Déconnexion</a></li>
+      <li class="nav-item" routerLinkActive="active"><a class="nav-link" routerLink="chat" [hidden]="!logged">Chat</a></li>
+    </ul>
+    <ul [hidden]="!logged" class="navbar-nav pull-right" role="menu">
+      <li class="dropdown"><a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown"> <i class="icon-cog"></i>{{profile.prenom}} {{profile.nom}}<b
+        class="caret"></b></a>
+        <ul class="dropdown-menu">
+          <li class="nav-item"><a routerLink="status" class="nav-link-dropdown"><i class="fa fa-gear" aria-hidden="true"></i> Preferences</a>
+          </li>
+          <li class="divider"></li>
+          <li class="nav-item"><a routerLink="login" class="nav-link-dropdown"><i class="fa fa-power-off"></i> Déconnexion</a></li>
+        </ul>
+      </li>
+    </ul>
+    <!--<form class="form-inline my-2 my-lg-0">-->
+    <!--<input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">-->
+    <!--<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>-->
+    <!--</form>-->
+  </div>
+</nav>

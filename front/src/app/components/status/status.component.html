@@ -1,0 +1,11 @@
+<div class="row">
+  <div class="col-md-4">
+    <h1>Utilisateur : {{profile.prenom}} {{profile.nom}}</h1>
+    <hr><br>
+    <p *ngIf="isLoggedIn">Statut : Connecté</p>
+    <p *ngIf="isLoggedIn">ID : {{profile.id}}</p>
+    <p *ngIf="isLoggedIn">Email : {{profile.username}}</p>
+    <p *ngIf="isLoggedIn">Avatar : {{profile.avatar}}</p>
+    <!--<p *ngIf="!isLoggedIn">Statut : Déconnecté</p>-->
+  </div>
+</div>
