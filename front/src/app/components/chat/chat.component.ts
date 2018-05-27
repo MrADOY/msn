@@ -45,7 +45,6 @@ export class ChatComponent implements OnInit {
   selectConv(email) {
     this.chat.getContact(email).then((res) => {
       this.contact = (Object.assign(new User(), res.json()));
-      console.log(this.contact);
       this.conv = new Conversation(this.contact.id, this.contact, this.profil, '50');
     });
   }

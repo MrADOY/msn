@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import {Headers, Http} from '@angular/http';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {User} from '../models/user';
@@ -10,7 +10,7 @@ const conf = (<any>data);
 
 
 @Injectable()
-export class ChatService {
+export class ChatService implements OnInit {
   private apiAuth = 'http://' + conf.url + ':5000/api/auth';
   private apiConn = 'http://' + conf.url + ':5000/api/connexions';
   private apiMsg = 'http://' + conf.url + ':5001/api/chat/envoyer-message';
@@ -19,6 +19,10 @@ export class ChatService {
   public contact: User;
 
   constructor(private http: Http) { }
+
+  ngOnInit() {
+  this.userCo = [];
+  }
 
   connectList(): Promise<any> {
     const url = `${this.apiConn}/utilisateurs-co`;
