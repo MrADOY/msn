@@ -13,7 +13,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI5IiwiaWF0IjoxNTI3MzM2MTQxLCJleHAiOjE1MjczMzk3NDF9.tlYSJjgRY8p2HlMG2LKfW-lgbt1BWUKC2Sh1CTW5QmJ4_Sb_afkBuGsQiGXrgLi2hdAZ9G0DVZHNo6REIYG5aw",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTI3MzQ2NTI1LCJleHAiOjE1MjczNTAxMjR9.S9o3f6E6eZyrgioi5XmaRhmt-EyhTomayELgZQwsmNELd1n3xF5B8Mcg0gsogiZV-ivCBezweD9VEWQSTokWtg",
 							"type": "string"
 						}
 					]
@@ -27,10 +27,64 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"destinataire\" : \"pietrzak.aurelien@gmail.com\",\n\t\"emetteur\" : \"romain.lefevre@gmail.com\",\n\t\"message\" : \"Salut Aurelien ! je suis Romain\"\n}"
+					"raw": "{\n\t\"destinataire\" : \"pietrzak.aurelien@gmail.com\",\n\t\"emetteur\" : \"pietrzak.aurelien@gmail.com\",\n\t\"message\" : \"Hello world !\"\n}"
 				},
 				"url": {
-					"raw": "http://localhost:5001/api/chat/envoyer-message",
+					"raw": "http://serveurnicoant.ddns.net:5001/api/chat/envoyer-message",
+					"protocol": "http",
+					"host": [
+						"serveurnicoant",
+						"ddns",
+						"net"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"chat",
+						"envoyer-message"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "upload Fichier",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "fichier",
+							"value": "",
+							"description": "",
+							"type": "file"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:5001/envoyer-fichier",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"envoyer-fichier"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "download fichier",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:5001/api/fichier/telecharger-fichier/fichierTest.txt",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -38,8 +92,9 @@
 					"port": "5001",
 					"path": [
 						"api",
-						"chat",
-						"envoyer-message"
+						"fichier",
+						"telecharger-fichier",
+						"fichierTest.txt"
 					]
 				}
 			},
