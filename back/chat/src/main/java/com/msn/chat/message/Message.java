@@ -49,4 +49,27 @@ public class Message {
 		}
 	}
 
+	public Connection getConnection() {
+		return connection;
+	}
+
+	public void setConnection(Connection connection) {
+		this.connection = connection;
+	}
+
+	public static Channel getChannel() {
+		return channel;
+	}
+
+	public static void setChannel(Channel channel) {
+		Message.channel = channel;
+	}
+
+	public static String getExchange_name() {
+		return exchange_name;
+	}
+
+	public static void setExchange_name(String exchange_name) {
+		Message.exchange_name = exchange_name;
+	}
 }
