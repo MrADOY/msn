@@ -86,6 +86,28 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "pdf",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:5002/api/admin/log-pdf",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5002",
+					"path": [
+						"api",
+						"admin",
+						"log-pdf"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
