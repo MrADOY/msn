@@ -38,6 +38,7 @@
     "ng2-avatar": "^2.3.1",
     "node-sass": "^4.9.0",
     "querystring-browser": "^1.0.4",
+    "rabbitmq": "0.0.2",
     "request": "^2.87.0",
     "rxjs": "^5.5.11",
     "zone.js": "^0.8.19"

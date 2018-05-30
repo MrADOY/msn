@@ -1,12 +1,18 @@
 package com.msn.chat.message;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.concurrent.TimeoutException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.msn.chat.modeles.Application;
+import com.msn.chat.modeles.Log;
+import com.msn.chat.modeles.TypeLog;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
@@ -43,6 +49,22 @@ public class Message {
 	public static boolean send(String message, String routingKey) {
 		try {
 			Message.channel.basicPublish(Message.exchange_name, routingKey, null, message.getBytes());
+			return true;
+		} catch (IOException e) {
+			return false;
+		}
+	}
+	
+	public static boolean sendLogMessage(String message, TypeLog type,Application appli) {
+
+		String logInJson = "";
+		try {
+			logInJson = new ObjectMapper().writeValueAsString(new Log(type,appli,message, new Date()));
+		} catch (JsonProcessingException e1) {
+			System.out.println("Erreur de parsing");
+		}
+		try {
+			Message.channel.basicPublish(Message.exchange_name, "LOG.System", null, logInJson.getBytes());
 			return true;
 		} catch (IOException e) {
 			return false;

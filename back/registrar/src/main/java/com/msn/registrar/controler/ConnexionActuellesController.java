@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.msn.registrar.message.Message;
 import com.msn.registrar.message.MessageType;
-import com.msn.registrar.modeles.Utilisateur;
 import com.msn.registrar.securite.UtilisateurPrincipal;
 
 @RestController

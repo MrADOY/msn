@@ -5,8 +5,6 @@ import java.net.URI;
 import java.util.Collections;
 import java.util.Date;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +17,6 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,8 +29,9 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.msn.registrar.exception.AppException;
 import com.msn.registrar.exception.BadRequestException;
 import com.msn.registrar.message.Message;
-import com.msn.registrar.message.MessageType;
+import com.msn.registrar.modeles.Application;
 import com.msn.registrar.modeles.Role;
+import com.msn.registrar.modeles.TypeLog;
 import com.msn.registrar.modeles.TypeRole;
 import com.msn.registrar.modeles.Utilisateur;
 import com.msn.registrar.payload.ApiResponse;
@@ -78,8 +76,8 @@ public class AuthentificationController {
 			authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
 					connexionRequest.getEmail(), connexionRequest.getPassword()));
 		} catch (AuthenticationException e) {
-			Message.send(connexionRequest.getEmail() + ":" + "Connexion non établie",
-					new MessageType("log", connexionRequest.getEmail()).ampqRoutingKey());
+			Message.sendLogMessage(connexionRequest.getEmail() + "n'a pas su se connecter",
+				TypeLog.ERREUR, Application.REGISTRAR);
 			throw new BadRequestException(
 					"Erreur d'authentification" + connexionRequest.getEmail() + connexionRequest.getPassword());
 		}
@@ -87,14 +85,14 @@ public class AuthentificationController {
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 
 		String jwt = jwtFournisseur.genererToken(authentication);
-		Message.send(connexionRequest.getEmail() + ":" + jwt + "Connexion établie",
-				new MessageType("log", connexionRequest.getEmail()).ampqRoutingKey());
-
+	
 		// Retourne le token et les details de l'utilisateur
 		UtilisateurPrincipal util = UtilisateurPrincipal.creer(repertoireUtilisateur
 				.findByEmail(connexionRequest.getEmail()).orElseThrow(() -> new UsernameNotFoundException(
 						"Utilsateur non trouvé avec cette email : " + connexionRequest.getEmail())));
 
+		Message.sendLogMessage(connexionRequest.getEmail() + " s'est connecté",
+				TypeLog.INFO, Application.REGISTRAR);
 		ConnexionActuellesController.addUser(util);
 		return ResponseEntity.ok(new AuthenticationResponse(jwt, util));
 	}
@@ -109,6 +107,8 @@ public class AuthentificationController {
 
 		ConnexionActuellesController.removeUser(util);
 		
+		Message.sendLogMessage(deconnexionRequest.getEmail() + "s'est deconnecté",
+				TypeLog.INFO, Application.REGISTRAR);
 		return ResponseEntity.ok("Deconnexion" + new Date().toString());
 	}
 
@@ -143,7 +143,8 @@ public class AuthentificationController {
 
 		URI location = ServletUriComponentsBuilder.fromCurrentContextPath().path("/users/{username}")
 				.buildAndExpand(result.getEmail()).toUri();
-
+		Message.sendLogMessage(inscriptionRequest.getEmail() + "s'est inscrit",
+				TypeLog.INFO, Application.REGISTRAR);
 		return ResponseEntity.created(location).body(new ApiResponse(true, "Utilisateur correctement enregitré"));
 	}
 }

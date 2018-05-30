@@ -1,0 +1,91 @@
+{
+	"info": {
+		"_postman_id": "36d886a2-277a-41a2-8aea-e702a2e3dcaa",
+		"name": "Admin",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Update MDP",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\":\"pietrzak.aurelien@gmail.com\",\n\t\"password\":\"aqzsaqzs\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:5002/api/admin/update",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5002",
+					"path": [
+						"api",
+						"admin",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\":\"pietrzak.aurelien@gmail.com\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:5002/api/admin/delete",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5002",
+					"path": [
+						"api",
+						"admin",
+						"delete"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Lister Utilisateurs",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:5002/api/admin/lister-utilisateurs",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5002",
+					"path": [
+						"api",
+						"admin",
+						"lister-utilisateurs"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

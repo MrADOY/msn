@@ -17,6 +17,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.msn.chat.config.ProprietesSauvegardeFichier;
 import com.msn.chat.exception.FileStorageException;
 import com.msn.chat.exception.MyFileNotFoundException;
+import com.msn.chat.message.Message;
+import com.msn.chat.modeles.TypeLog;
 
 @Service
 public class GestionEnregistrementFichier {
