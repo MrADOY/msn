@@ -1,7 +1,10 @@
 package com.msn.log.controller;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URI;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
@@ -14,7 +17,11 @@ import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -45,6 +52,9 @@ import com.msn.log.securite.UtilisateurPrincipal;
 @RequestMapping("api/admin/")
 public class GestionUtilisateurControlleur {
 
+	
+	protected String file_name = "log.pdf";
+	
 	@Autowired
 	RepertoireRole repertoireRole;
 
@@ -123,7 +133,7 @@ public class GestionUtilisateurControlleur {
 	}
 
 	@GetMapping("/log-pdf")
-	public ResponseEntity<?> genererLogPDF() {
+	public ResponseEntity<?> genererLogPDF() throws Exception {
 		PDDocument document;
 
 		document = new PDDocument();
@@ -163,11 +173,33 @@ public class GestionUtilisateurControlleur {
 		}
 
 		try {
-			document.save("test.pdf");
+			document.save(file_name);
 			document.close();
 		} catch (IOException e) {
 			System.out.println("Impossible de refermer le pdf");
 		}
-		return null;
+		Resource resource = chargerFichierCommeRessource(file_name);
+		String contentType = "application/pdf";
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(contentType))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "piece-jointe; nomfichier=\"" + resource.getFilename() + "\"")
+                .body(resource);
+    
+	}
+		
+	public Resource chargerFichierCommeRessource(String nomFichier) throws Exception {
+		try {
+			
+			Path filePath = Paths.get(nomFichier)
+	                .toAbsolutePath().normalize();
+			Resource resource = new UrlResource(filePath.toUri());
+			if (resource.exists()) {
+				return resource;
+			} else {
+				throw new Exception("Fichier non trouvé" + nomFichier);
+			}
+		} catch (MalformedURLException e) {
+			throw new Exception("Fichier non trouvé " + nomFichier, e);
+		}
 	}
 }
