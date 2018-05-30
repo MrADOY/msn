@@ -19,13 +19,17 @@ import com.msn.chat.message.MessageType;
 import com.msn.chat.modeles.Application;
 import com.msn.chat.modeles.TypeLog;
 import com.msn.chat.payload.ApiResponse;
+import com.msn.chat.payload.MessageRecu;
 import com.msn.chat.payload.SendMessageRequest;
+
 
 
 @RestController
 @CrossOrigin
 public class EnvoyerMessageController {
 
+	@Autowired
+	private SimpMessagingTemplate webSocketMessagingTemplate;
 	@Bean
 	public RestTemplate restTemplate(RestTemplateBuilder builder) {
 		return builder.build();
@@ -44,19 +48,31 @@ public class EnvoyerMessageController {
 		if (isConnecte(message.getDestinataire())) {
 			if (Message.send(message.getMessage(),
 					new MessageType(message.getDestinataire(), message.getEmetteur()).ampqRoutingKey())) {
-				Message.sendLogMessage(message.getEmetteur() + "a envoyé un message à " + message.getDestinataire(), TypeLog.INFO,Application.CHAT);
+				Message.sendLogMessage(message.getEmetteur() + "a envoyé un message à " + message.getDestinataire(),
+						TypeLog.INFO, Application.CHAT);
+				sendPrivateMessage(
+						new MessageRecu(message.getDestinataire(), message.getEmetteur(), message.getMessage()));
 				return ResponseEntity.ok(new ApiResponse(true, "Message envoyé"));
-				
+
 			}
 		}
-		Message.sendLogMessage(message.getEmetteur() + "n'a pas su envoyé son message à " + message.getDestinataire(), TypeLog.WARNING,Application.CHAT);
+		Message.sendLogMessage(message.getEmetteur() + "n'a pas su envoyé son message à " + message.getDestinataire(),
+				TypeLog.WARNING, Application.CHAT);
 		return new ResponseEntity<ApiResponse>(new ApiResponse(false, "Message non envoyé destinataire hors ligne"),
 				HttpStatus.BAD_REQUEST);
+
 	}
 
 	public Boolean isConnecte(String email) {
-		return restTemplate.getForObject("http://localhost:5000/api/connexions/connecte/" + email, Boolean.class);
-	}		
+		return restTemplate.getForObject("http://172.17.0.3:5000/api/connexions/connecte/" + email, Boolean.class);
+	}
+	
+	public void sendPrivateMessage(MessageRecu message) {
+		webSocketMessagingTemplate.convertAndSend(
+				"/topic/" + message.getDestinataire() + ".public.messages",
+				message);
+	}
+	
 }
 
 

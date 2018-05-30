@@ -18,7 +18,7 @@ import com.msn.registrar.securite.UtilisateurPrincipal;
 @RequestMapping("/api/connexions")
 public class ConnexionActuellesController {
 
-	protected static Set<UtilisateurPrincipal> utilisateursConnectes;
+	protected static Set<UtilisateurPrincipal> utilisateursConnectes = new HashSet<>();
 
 	@GetMapping("utilisateurs-co")
 	public ResponseEntity<?> findAllUser() {
