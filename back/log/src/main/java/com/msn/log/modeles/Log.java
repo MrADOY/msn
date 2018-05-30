@@ -41,6 +41,11 @@ public class Log {
     	// Pour Json Jackson
     }
     
+	@Override
+	public String toString() {
+		return "Log [type=" + type + ", appli=" + appli + ", message=" + message + ", date=" + date + "]";
+	}
+
 	public Log(TypeLog type, Application appli,String message, Date date) {
 		this.appli = appli;
 		this.type = type;

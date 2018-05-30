@@ -44,7 +44,12 @@ public class Log {
 		this.message = message;
 		this.date = date;
 	}
-
+	
+	@Override
+	public String toString() {
+		return "Log [type=" + type + ", appli=" + appli + ", message=" + message + ", date=" + date + "]";
+	}
+	
 	public Long getId() {
 		return id;
 	}

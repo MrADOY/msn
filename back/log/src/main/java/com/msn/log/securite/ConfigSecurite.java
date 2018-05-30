@@ -58,7 +58,7 @@ public class ConfigSecurite extends WebSecurityConfigurerAdapter {
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
 				.antMatchers("/", "/favicon.ico", "/**/*.png", "/**/*.gif", "/**/*.svg", "/**/*.jpg", "/**/*.html",
 						"/**/*.css", "/**/*.js")
-				.permitAll().antMatchers("/envoyer-message").hasRole("USER");
+				.permitAll();//.antMatchers("/api/admin/*").hasRole("ADMIN");
 
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 

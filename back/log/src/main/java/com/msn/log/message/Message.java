@@ -111,14 +111,13 @@ public class Message {
 			}
 		}
 
-		System.out.println(" [*] Waiting for messages. To exit press CTRL+C");
+		System.out.println("Waiting for messages.");
 
 		Consumer consumer = new DefaultConsumer(channel) {
 			@Override
 			public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties,
 					byte[] body) throws IOException {
 				String message = new String(body, "UTF-8");
-			//	System.out.println(" [x] Received '" + envelope.getRoutingKey() + "':'" + message + "'");
 				ObjectMapper mapper = new ObjectMapper();
 				Log log = mapper.readValue(message, Log.class);
 				log.setId(0L);
