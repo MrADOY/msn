@@ -27,8 +27,6 @@ public class GestionEnregistrementFichier {
 
     @Autowired
     public GestionEnregistrementFichier(ProprietesSauvegardeFichier proprietesSauvegardeFichier) {
-    	
-    		System.out.println(proprietesSauvegardeFichier.getDossierUpload());
     		
         this.LocalisationFichierSauvegarde = Paths.get(proprietesSauvegardeFichier.getDossierUpload())
                 .toAbsolutePath().normalize();

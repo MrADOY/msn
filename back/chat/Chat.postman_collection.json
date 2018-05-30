@@ -27,15 +27,13 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"destinataire\" : \"pietrzak.aurelien@gmail.com\",\n\t\"emetteur\" : \"pietrzak.aurelien@gmail.com\",\n\t\"message\" : \"Hello world !\"\n}"
+					"raw": "{\n\t\"destinataire\" : \"pietrzak.aurelien@gmail.com\",\n\t\"emetteur\" : \"pietrzak.aurelien@gmail.com\",\n\t\"message\" : \"Pareil j'aime bien !\"\n}"
 				},
 				"url": {
-					"raw": "http://serveurnicoant.ddns.net:5001/api/chat/envoyer-message",
+					"raw": "http://localhost:5001/api/chat/envoyer-message",
 					"protocol": "http",
 					"host": [
-						"serveurnicoant",
-						"ddns",
-						"net"
+						"localhost"
 					],
 					"port": "5001",
 					"path": [
