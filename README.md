@@ -23,7 +23,7 @@
 
 Notre projet devait respecter une certaine architecture afin de pouvoir remarquer les défauts et avantages de cette architecture 
 
-![Capture d’écran 2018-05-30 à 20.20.45](/Users/aurelienpietrzak/Documents/Java/projet/msn/images/Capture d’écran 2018-05-30 à 20.20.45.png)
+![Capture d’écran 2018-05-30 à 20.20.45](https://github.com/MrADOY/msn/blob/master/images/Capture%20d’écran%202018-05-30%20à%2020.20.45.png)
 
 #### Presentation des technologies 
 
@@ -103,7 +103,7 @@ http://localhost:5000/swagger-ui.html
 puis naviger pour tester les API
 ```
 
-![Capture d’écran 2018-05-30 à 20.41.44](/Users/aurelienpietrzak/Documents/Java/projet/msn/images/Capture d’écran 2018-05-30 à 20.41.44.png)
+![Capture d’écran 2018-05-30 à 20.41.44](https://github.com/MrADOY/msn/blob/master/images/Capture%20d’écran%202018-05-30%20à%2020.41.44.png)
 
 #### Questions 
 
@@ -117,12 +117,12 @@ puis naviger pour tester les API
 
 2. Proposez une architecture qui permet d’assurer un service continue sur la partie messagerie
 
-   cliente, ici on ne prendra pas en compte la continuité de service de la partie administrative.
+   cliente, ici on ne prendra pas en compte la continuité de service de la partie administrative.
 
-3. RabbitMQ est un point névralgique de notre architecture, que peut-on faire pour que cela ne
+3. RabbitMQ est un point névralgique de notre architecture, que peut-on faire pour que cela ne
 
    le soit plus, ou tout au moins permettre une solution de secours.
 
    > Le bus est le centre de l'application, c'est par celui ci que toutes les informations transistes, pour éviter cela on pourrait utiliser les websockets avec sockJS par exemple pour eviter de surcharger les appels API, notamment appeler registrar pour chaque message, les websockets permettent de developer des webhooks qui sont l'inverse de l'API dans le sens où c'est le serveur qui contacte le client, le service qui indique si l'utilisateur est connecté viendrait donc à disparaitre, cette technologie permettrait même de faire disparaitre le bus AMQP 
 
-![Capture d’écran 2018-05-30 à 21.25.01](/Users/aurelienpietrzak/Documents/Java/projet/msn/images/Capture d’écran 2018-05-30 à 21.25.01.png)
+![Capture d’écran 2018-05-30 à 21.25.01](https://github.com/MrADOY/msn/blob/master/images/Capture%20d’écran%202018-05-30%20à%2021.25.01.png)
