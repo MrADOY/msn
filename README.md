@@ -109,11 +109,11 @@ en réunissant les variables nécessaires
 
 Via Swagger
 
-Registrar
+1. Registrar
 http://serveurnicoant.ddns.net:5000/swagger-ui.html
-Chat
+2. Chat
 http://serveurnicoant.ddns.net:5001/swagger-ui.html
-Log/Admin
+3. Log/Admin
 http://serveurnicoant.ddns.net:5002/swagger-ui.html
 
 ```
