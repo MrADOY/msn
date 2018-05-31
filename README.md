@@ -1,6 +1,6 @@
 ### Application de discution instantanée basée sur les microservices
 
-Application Disponible à cette URL : 
+Application Disponible à cette URL : http://serveurnicoant.ddns.net/msn/
 
 > Hebergé en local sur des dockers, la connexion internet n'est pas super les appels peuvent être long ...
 
