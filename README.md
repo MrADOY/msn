@@ -2,7 +2,7 @@
 
 Application Disponible à cette URL : http://serveurnicoant.ddns.net/msn/
 
-> Hebergé en local sur des dockers, la connexion internet n'est pas super les appels peuvent être long ...
+> Hebergé sur le framework Heroku, Angular sur serveur local
 
 > Application ne disposant pas des dernières fonctionnalités comme le panneau d'administration mais vous aurez l'occasion de 
 > les tester avec des méthodes décrites en dessous, tous les fonctionnalités sont implementées en Java, il nous manque un 
@@ -60,6 +60,9 @@ Notre projet devait respecter une certaine architecture afin de pouvoir remarque
 
   > Librairie de gestion de BUS AMQP
 
+- Heroku
+
+  > Service cloud permettant d'heberger des applications Java
 
 - JWT
 
@@ -110,11 +113,11 @@ en réunissant les variables nécessaires
 Via Swagger
 
 1. Registrar
-http://serveurnicoant.ddns.net:5000/swagger-ui.html
+https://msn-registrar-istv.herokuapp.com/swagger-ui.html
 2. Chat
-http://serveurnicoant.ddns.net:5001/swagger-ui.html
+https://msn-chat-istv.herokuapp.com/swagger-ui.html
 3. Log/Admin
-http://serveurnicoant.ddns.net:5002/swagger-ui.html
+https://msn-log-istv.herokuapp.com/swagger-ui.html
 
 ```
 ou si deployer en locan ...
