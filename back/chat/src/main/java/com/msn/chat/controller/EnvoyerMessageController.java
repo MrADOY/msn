@@ -61,7 +61,7 @@ public class EnvoyerMessageController {
 		if (isConnecte(message.getDestinataire())) {
 			if (Message.send(message.getMessage(),
 					new MessageType(message.getDestinataire(), message.getEmetteur()).ampqRoutingKey())) {
-				Message.sendLogMessage(message.getEmetteur() + "a envoyé un message à " + message.getDestinataire(),
+				Message.sendLogMessage(message.getEmetteur() + " a envoyé un message à " + message.getDestinataire(),
 						TypeLog.INFO, Application.CHAT);
 				// Stomp websocket
 				sendPrivateMessage(
@@ -81,7 +81,7 @@ public class EnvoyerMessageController {
 	}
 
 	public Boolean isConnecte(String email) {
-		return restTemplate.getForObject("http://localhost:5000/api/connexions/connecte/" + email, Boolean.class);
+		return restTemplate.getForObject("https://msn-registrar-istv.herokuapp.com/api/connexions/connecte/" + email, Boolean.class);
 	}
 	
 	// On envoie aux clients abonnés à cette queue les message

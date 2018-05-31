@@ -2,7 +2,7 @@ var email = "pietrzak.aurelien@gmail.com";
 var newMessages = $("#newMessages");
 
 function connect() {
-		socket = new SockJS('http://localhost:5001/ws');
+		socket = new SockJS('https://msn-chat-istv.herokuapp.com/ws');
 		stompClient = Stomp.over(socket);
 		stompClient.connect({ 'userID' : email }, stompSuccess, stompFailure);
 	}

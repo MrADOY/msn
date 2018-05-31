@@ -49,10 +49,8 @@ public class Message {
 	public static boolean send(String message, String routingKey) {
 		try {
 			Message.channel.basicPublish(Message.exchange_name, routingKey, null, message.getBytes());
-			Message.sendLogMessage(routingKey + "ce sont envoyés un message",TypeLog.INFO,Application.CHAT);
 			return true;
 		} catch (IOException e) {
-			Message.sendLogMessage(routingKey + "erreur lors de l'envoie de message",TypeLog.ERREUR,Application.CHAT);
 			return false;
 		}
 	}
