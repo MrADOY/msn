@@ -1,21 +1,28 @@
 ### Application de discution instantanée basée sur les microservices
 
+Application Disponible à cette URL : 
+
+> Hebergé en local sur des dockers, la connexion internet n'est pas super les appels peuvent être long ...
+
+> Application ne disposant pas des dernières fonctionnalités comme le panneau d'administration mais vous aurez l'occasion de 
+> les tester avec des méthodes décrites en dessous, tous les fonctionnalités sont implementées en Java, il nous manque un 
+> petit timing pour les intégrer au front...
+
 #### Contributeurs
 
-- Jourdain Nicolas
+- Jourdain Nicolas Sadgasmification
 
   > Nicolas s'est occupé de la partie IHM de l'application, il a utilisé le framework Angular 5
 
-- Thomas Buchard
+- Thomas Buchard tombuch
 
   > Thomas a developpé le bus RabbitMQ permettant la transmission des données entre les microservices
 
-- Lefevre Romain 
+- Lefevre Romain R0oma1n
 
   > Romain a permis le deploiement de tous les microservices sur Docker et s'est occupé de la gestion de la BDD avec notamment AWS
 
-
-- Pietrzak Aurélien
+- Pietrzak Aurélien MrADOY
 
   > Aurélien s'est occupé des API et du developpemnt des microservices à l'aide de SpringBoot, Maven, Java, Swagger, JWT
 
@@ -29,7 +36,7 @@ Notre projet devait respecter une certaine architecture afin de pouvoir remarque
 
 - SpringBoot
 
-  > Framework permettant de developper une application automone qui embarque un serveur d'application
+  > Framework permettant de developper une application autonome qui embarque un serveur d'application
 
 - Angular
 
@@ -73,11 +80,15 @@ cd back
 mvn spring-boot:run
 ```
 
-- registrar : fonctionner port 5000
-- chat  : fonctionner port 5001
-- Log : fonctionner port 5002
+- registrar : fonctionne sur le port 5000
+- chat  : fonctionne sur le port 5001
+- Log : fonctionne sur le port 5002
 
 #### Tester votre un micro service
+
+```
+Pour tous les appels, un jwt est a fournir dans le header de l'application, inscrivez vous puis connectez vous,le jwt se trouve dans la réponse à l'appel rest 
+```
 
 *Requis*
 
@@ -98,7 +109,15 @@ en réunissant les variables nécessaires
 
 Via Swagger
 
+Registrar
+http://serveurnicoant.ddns.net:5000/swagger-ui.html
+Chat
+http://serveurnicoant.ddns.net:5001/swagger-ui.html
+Log/Admin
+http://serveurnicoant.ddns.net:5002/swagger-ui.html
+
 ```
+ou si deployer en locan ...
 http://localhost:5000/swagger-ui.html
 puis naviger pour tester les API
 ```
@@ -123,6 +142,6 @@ puis naviger pour tester les API
 
    le soit plus, ou tout au moins permettre une solution de secours.
 
-   > Le bus est le centre de l'application, c'est par celui ci que toutes les informations transistes, pour éviter cela on pourrait utiliser les websockets avec sockJS par exemple pour eviter de surcharger les appels API, notamment appeler registrar pour chaque message, les websockets permettent de developer des webhooks qui sont l'inverse de l'API dans le sens où c'est le serveur qui contacte le client, le service qui indique si l'utilisateur est connecté viendrait donc à disparaitre, cette technologie permettrait même de faire disparaitre le bus AMQP 
+   > Le bus est le centre de l'application, c'est par celui ci que toutes les informations transites, pour éviter cela on pourrait utiliser les websockets avec sockJS par exemple pour eviter de surcharger les appels API, notamment appeler registrar pour chaque message, les websockets permettent de developer des webhooks qui sont l'inverse de l'API dans le sens où c'est le serveur qui contacte le client, le service qui indique si l'utilisateur est connecté viendrait donc à disparaitre, cette technologie permettrait même de faire disparaitre le bus AMQP 
 
 ![Capture d’écran 2018-05-30 à 21.25.01](https://github.com/MrADOY/msn/blob/master/images/Capture%20d’écran%202018-05-30%20à%2021.25.01.png)
