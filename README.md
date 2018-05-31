@@ -2,7 +2,7 @@
 
 Application Disponible à cette URL : http://serveurnicoant.ddns.net/msn/
 
-> Hebergé sur le framework Heroku, Angular sur serveur local
+> Hebergé sur le framework Heroku, Angular sur serveur local, BDD sur AWS
 
 > Application ne disposant pas des dernières fonctionnalités comme le panneau d'administration mais vous aurez l'occasion de 
 > les tester avec des méthodes décrites en dessous, tous les fonctionnalités sont implementées en Java, il nous manque un 
@@ -60,7 +60,7 @@ Notre projet devait respecter une certaine architecture afin de pouvoir remarque
 
   > Librairie de gestion de BUS AMQP
 
-- Heroku
+- Heroku / AWS
 
   > Service cloud permettant d'heberger des applications Java
 
