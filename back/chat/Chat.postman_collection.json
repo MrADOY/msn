@@ -13,7 +13,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTI3MzQ2NTI1LCJleHAiOjE1MjczNTAxMjR9.S9o3f6E6eZyrgioi5XmaRhmt-EyhTomayELgZQwsmNELd1n3xF5B8Mcg0gsogiZV-ivCBezweD9VEWQSTokWtg",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTI3NzE2NDI5LCJleHAiOjE1Mjc3MjAwMjl9.ph4VQsUFmrJCtNJERMcbOG2HcieLlhwV1rT8_Jyoyw4eMQMvwsuVOflr9HYmmmzcDSrovbj5kNAjjqPV4tx_TA",
 							"type": "string"
 						}
 					]
@@ -27,7 +27,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"destinataire\" : \"pietrzak.aurelien@gmail.com\",\n\t\"emetteur\" : \"pietrzak.aurelien@gmail.com\",\n\t\"message\" : \"Pareil j'aime bien !\"\n}"
+					"raw": "{\n\t\"destinataire\" : \"thanos@avengers.com\",\n\t\"emetteur\" : \"pietrzak.aurelien@gmail.com\",\n\t\"message\" : \"Salut Thanos !\"\n}"
 				},
 				"url": {
 					"raw": "http://localhost:5001/api/chat/envoyer-message",
@@ -93,6 +93,36 @@
 						"fichier",
 						"telecharger-fichier",
 						"fichierTest.txt"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "anciens messages",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"destinataire\" : \"thanos@avengers.com\",\n\t\"emetteur\" : \"pietrzak.aurelien@gmail.com\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:5001/api/chat/anciens-messages",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"chat",
+						"anciens-messages"
 					]
 				}
 			},
